@@ -18,7 +18,7 @@ class ListDriver extends Component {
           <tbody>
             {
               this.props.drivers.map((driver, i) => {
-                return <Driver driver={driver} key={i} notifyClicked={this.props.notifyClicked}/>
+                return <Driver driver={driver} key={i}/>
               })
             }
           </tbody>

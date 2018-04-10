@@ -14,18 +14,18 @@ class ListDriverPage extends Component {
       selectedDriver : {},
       isShown : false
     }
-    this.notifyClicked = this.notifyClicked.bind(this);
+    // this.notifyClicked = this.notifyClicked.bind(this);
     this.sendClicked = this.sendClicked.bind(this);
     this.cancelClicked = this.cancelClicked.bind(this);
   }
 
-  notifyClicked(e){
-    console.log("notify container clicked");
-    this.setState({
-        isShown : true,
-        selectedDriver : e
-    })
-  }
+  // notifyClicked(e){
+  //   console.log("notify container clicked");
+  //   this.setState({
+  //       isShown : true,
+  //       selectedDriver : e
+  //   })
+  // }
   sendClicked(e){
     console.log("send container clicked");
     // submit api here, if success then make isShown false
@@ -39,9 +39,9 @@ class ListDriverPage extends Component {
     console.log("nextProps = " + JSON.stringify(nextProps.state.selectedDriver));
     console.log("nextProps is modal shown  = " + JSON.stringify(nextProps.state.selectedDriver.isModalShown));
     if (nextProps.state.selectedDriver) {
-      // this.props.posts.unshift(nextProps.newPost);
       this.setState({
-        isShown : nextProps.state.selectedDriver.isModalShown
+        isShown : nextProps.state.selectedDriver.isModalShown,
+        selectedDriver : nextProps.state.selectedDriver.selectedDriver
     })
     }
     
@@ -66,7 +66,7 @@ class ListDriverPage extends Component {
     return (
       <div>
         {
-            <ListDriver drivers={this.state.drivers} notifyClicked ={this.notifyClicked}/>
+            <ListDriver drivers={this.state.drivers}/>
         }
         {
             this.state.isShown ? <Modal selectedDriver = {this.state.selectedDriver} 
