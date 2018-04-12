@@ -3,7 +3,7 @@ import listDriverJson from '../drivers.json';
 import ListDriver from '../components/listDriverPage/ListDriver';
 import Modal from '../components/listDriverPage/Modal'
 import { connect } from 'react-redux';
-import { selectDriver } from '../actions/postActions';
+import { selectDriver, updateDriver, loadDrivers } from '../actions/postActions';
 import PropTypes from 'prop-types';
 
 class ListDriverPage extends Component {
@@ -29,6 +29,7 @@ class ListDriverPage extends Component {
   sendClicked(e){
     console.log("send container clicked");
     // submit api here, if success then make isShown false
+    this.props.updateDriver(this.state.selectedDriver)
     this.setState({
         isShown : false
     })
@@ -44,7 +45,7 @@ class ListDriverPage extends Component {
         selectedDriver : nextProps.state.selectedDriver.selectedDriver
     })
     }
-    
+
   }
 
   cancelClicked(e){
@@ -59,21 +60,27 @@ class ListDriverPage extends Component {
   }
 
   getDrivers(){
-    this.setState({ drivers: listDriverJson.drivers});
+    if (typeof this.props.state.selectedDriver.drivers === 'undefined') {
+      this.props.loadDrivers(listDriverJson.drivers)
+    }
+    if (typeof this.props.state.selectedDriver.drivers !== 'undefined') {
+      this.setState({ drivers: this.props.state.selectedDriver.drivers })
+    }
   }
 
   render() {
-    return (
+
+    return typeof this.props.state.selectedDriver.drivers !== 'undefined' ? (
       <div>
         {
-            <ListDriver drivers={this.state.drivers}/>
+            <ListDriver drivers={this.props.state.selectedDriver.drivers}/>
         }
         {
-            this.state.isShown ? <Modal selectedDriver = {this.state.selectedDriver} 
+            this.state.isShown ? <Modal selectedDriver = {this.state.selectedDriver}
             sendClicked={this.sendClicked} cancelClicked={this.cancelClicked}/> : null
         }
       </div>
-    );
+    ) : null;
   }
 }
 
@@ -86,4 +93,4 @@ const mapStateToProps = state => ({
   state
 });
 
-export default connect(mapStateToProps, { selectDriver })(ListDriverPage);;
+export default connect(mapStateToProps, { selectDriver, updateDriver, loadDrivers })(ListDriverPage);;

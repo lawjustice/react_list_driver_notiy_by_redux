@@ -1,4 +1,4 @@
-import { SELECT_DRIVER} from './types';
+import { SELECT_DRIVER, UPDATE_DRIVER, LOAD_DRIVER} from './types';
 
 export const selectDriver = driverData => dispatch => {
     console.log("postAction selectDriver = " + JSON.stringify(driverData))
@@ -7,6 +7,21 @@ export const selectDriver = driverData => dispatch => {
         payload: driverData
       })
 };
+
+export const updateDriver = driverData => dispatch => {
+    console.log("postAction updateDriver = " + JSON.stringify(driverData))
+      dispatch({
+        type: UPDATE_DRIVER,
+        payload: driverData
+      })
+};
+
+export const loadDrivers = drivers => dispatch => {
+  dispatch({
+    type: LOAD_DRIVER,
+    payload: drivers
+  })
+}
 
 // export const fetchPosts = () => dispatch => {
 //   fetch('https://jsonplaceholder.typicode.com/posts')
